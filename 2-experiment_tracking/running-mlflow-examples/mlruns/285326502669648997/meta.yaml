@@ -1,6 +1,0 @@
-artifact_location: file:///Users/rollan/Desktop/mlops_training/2-experiment_tracking/running-mlflow-examples/mlruns/285326502669648997
-creation_time: 1691393230539
-experiment_id: '285326502669648997'
-last_update_time: 1691393230539
-lifecycle_stage: active
-name: my-experiment-1
