@@ -41,7 +41,7 @@ def add_features(df_train, df_val):
     y_val = np.stack(y_val)
     return X_train, y_train, X_val, y_val
 
-@task(print_logs=True)
+@task(log_prints=True)
 def train_best_model(X_train, y_train, X_val, y_val) -> None:
     with mlflow.start_run():
         train = xgb.DMatrix(X_train, label=y_train)
