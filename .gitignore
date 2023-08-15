@@ -1,3 +1,5 @@
 data/data_embeddings.csv
 data/Fake.csv
 data/True.csv
+data/train_data.csv
+data/valid_data.csv
