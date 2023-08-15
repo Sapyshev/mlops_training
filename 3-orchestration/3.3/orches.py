@@ -18,12 +18,14 @@ def convert(item):
     item = np.fromstring(item, sep=' ')  # convert string to `numpy.array`
     return item
 
+@task(retries=3, retry_delay_seconds=2)
 def read_data(filename: str) -> pd.DataFrame:
     """Read data into dataframe"""
     df = pd.read_csv(filename)
     df['vector'] = df['vector'].apply(convert)
     return df
 
+@task
 def add_features(df_train, df_val):
     """"""
     X_train = df_train['vector']
@@ -39,6 +41,7 @@ def add_features(df_train, df_val):
     y_val = np.stack(y_val)
     return X_train, y_train, X_val, y_val
 
+@task(print_logs=True)
 def train_best_model(X_train, y_train, X_val, y_val) -> None:
     with mlflow.start_run():
         train = xgb.DMatrix(X_train, label=y_train)
@@ -68,6 +71,7 @@ def train_best_model(X_train, y_train, X_val, y_val) -> None:
         mlflow.xgboost.log_model(booster, artifact_path="models_mlflow")
     return None
 
+@flow
 def main_flow(
         train_path: str = "../data/train_data.csv",
         val_path: str = "../data/train_data.csv",
