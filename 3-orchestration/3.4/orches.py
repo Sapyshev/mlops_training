@@ -74,7 +74,7 @@ def train_best_model(X_train, y_train, X_val, y_val) -> None:
 @flow
 def main_flow(
         train_path: str = "../data/train_data.csv",
-        val_path: str = "../data/train_data.csv",
+        val_path: str = "../data/valid_data.csv",
 ) -> None:
     """"""
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
@@ -87,5 +87,4 @@ def main_flow(
 
     train_best_model(X_train, y_train, X_val, y_val)
 
-if __name__ == "__main__":
-    main_flow()
+if __name__ == "__main__": main_flow()
