@@ -6,9 +6,10 @@ import spacy
 
 nlp = spacy.load("en_core_web_lg")
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+#mlflow.set_tracking_uri("http://127.0.0.1:5000")
 RUN_ID = "72751afe6b954f198b78a635369a8dc4"
-logged_model = 'runs:/72751afe6b954f198b78a635369a8dc4/model'
+logged_model = f's3://mlflow-artifacts-remote-rollan/1/{RUN_ID}/artifacts/model'
+#logged_model = 'runs:/72751afe6b954f198b78a635369a8dc4/model'
 model = mlflow.pyfunc.load_model(logged_model)
 
 
