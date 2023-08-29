@@ -1,11 +1,16 @@
 import pickle
+import mlflow
+from mlflow.tracking import MlflowClient
 from flask import Flask, request, jsonify
 import spacy
 
 nlp = spacy.load("en_core_web_lg")
 
-with open("svm_model.bin", "rb") as f_in:
-    model= pickle.load(f_in)
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
+RUN_ID = "72751afe6b954f198b78a635369a8dc4"
+logged_model = 'runs:/72751afe6b954f198b78a635369a8dc4/model'
+model = mlflow.pyfunc.load_model(logged_model)
+
 
 def preprocess(ride):
     vector = nlp(ride).vector
@@ -31,7 +36,8 @@ def predict_endpoint():
     pred = num_to_word(pred)
 
     result = {
-        'The origin of news': pred
+        'The origin of news': pred,
+        'model_version': RUN_ID
     }
     return jsonify(result)
 
